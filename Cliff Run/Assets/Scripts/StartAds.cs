@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.Advertisements;
 
 public class StartAds : MonoBehaviour {
-    public bool Show = false;
+    public static bool Show = false;
 
 	// Use this for initialization
 	void Start () {
