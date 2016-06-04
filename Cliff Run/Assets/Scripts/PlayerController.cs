@@ -6,8 +6,13 @@ public class PlayerController : MonoBehaviour {
     public CharacterController cc;
     public float forwardspeed;
     public float speed = 1;
-    public float jumpspeed = 2;
+    
     public Text debug;
+    
+    float gravity = 15.0f;
+   
+    float jumpSpeed = 10.0f;
+    private Vector3 movementj = Vector3.zero;
     // Use this for initialization
     void Start () {
 	
@@ -20,17 +25,17 @@ public class PlayerController : MonoBehaviour {
         forwardspeed = Time.time * speed;
 
         Vector3 movement = new Vector3(forwardspeed, 0, 0);
-
         cc.SimpleMove(movement);
+
         // jump
         if (Input.touchCount > 0)
-        {
-            debug.text = "Touched";
-        }
-        {
+            if (cc.isGrounded)
+            {
+                movementj.y = jumpSpeed;
 
-        }
-        
-        
-	}
+            }
+        movementj.y -= gravity * Time.deltaTime;
+
+        cc.Move(movementj * Time.deltaTime);
+    }
 }
