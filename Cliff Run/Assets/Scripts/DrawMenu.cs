@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Advertisements;
+using UnityEngine.SceneManagement;
 
 public class DrawMenu : MonoBehaviour {
     private Vector3 scale;
@@ -9,6 +10,7 @@ public class DrawMenu : MonoBehaviour {
     public float x, y, width, height;
     public float ad;
     public bool showed = false;
+    
     void Start () {
 	
 	}
@@ -19,11 +21,12 @@ public class DrawMenu : MonoBehaviour {
 	}
     void OnGUI()
     {
+
         if (!(Advertisement.isShowing))
         {
             if (showed == true)
             {
-                Application.LoadLevel("Game");
+                SceneManager.LoadScene("Game");
             }
         }
         scale.x = Screen.width / originalWidth; // calculate hor scale
@@ -32,23 +35,23 @@ public class DrawMenu : MonoBehaviour {
         var svMat = GUI.matrix; // save current matrix
         GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
         //draw here
+        if (Advertisement.isInitialized) {
+            if (GUI.Button(new Rect(339.1f, 396.3f, 148.1f, 48f), "Play"))
+            {
+                ad = Random.Range(0, 2);
+                if (ad == 0)
+                {
+                    GetComponent<StartAds>().Show = true;
+                    showed = true;
 
-        if(GUI.Button(new Rect(339.1f, 396.3f, 148.1f, 48f), "Play"))
-        {
-            ad = Random.Range(0, 2);
-            if (ad == 0)
-            {
-                GetComponent<StartAds>().Show = true;
-                showed = true;
-             
-            }else
-            {
-                Application.LoadLevel("Game");
+                } else
+                {
+                    SceneManager.LoadScene("Game");
+                }
+
             }
-
+            GUI.Button(new Rect(339.1f, 452.52f, 148.1f, 48f), "?");
         }
-        GUI.Button(new Rect(339.1f, 452.52f, 148.1f, 48f), "?");
-
         //
         GUI.matrix = svMat; // restore matrix
 
