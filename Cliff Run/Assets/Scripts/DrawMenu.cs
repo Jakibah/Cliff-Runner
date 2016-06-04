@@ -8,6 +8,7 @@ public class DrawMenu : MonoBehaviour {
     public float originalHeight = 360.0f; // you used to create the GUI contents 
     public float x, y, width, height;
     public float ad;
+    public bool showed = false;
     void Start () {
 	
 	}
@@ -18,6 +19,13 @@ public class DrawMenu : MonoBehaviour {
 	}
     void OnGUI()
     {
+        if (!(Advertisement.isShowing))
+        {
+            if (showed == true)
+            {
+                Application.LoadLevel("Game");
+            }
+        }
         scale.x = Screen.width / originalWidth; // calculate hor scale
         scale.y = Screen.height / originalHeight; // calculate vert scale
         scale.z = 1;
@@ -30,16 +38,9 @@ public class DrawMenu : MonoBehaviour {
             ad = Random.Range(0, 2);
             if (ad == 0)
             {
-                StartAds.Show = true;
-                Application.LoadLevel("Game");
-                if (Advertisement.isShowing)
-                {
-                    Time.timeScale = 0;
-                }
-                if (!(Advertisement.isShowing))
-                {
-                    Time.timeScale = 1;
-                }
+                GetComponent<StartAds>().Show = true;
+                showed = true;
+             
             }else
             {
                 Application.LoadLevel("Game");
@@ -52,4 +53,6 @@ public class DrawMenu : MonoBehaviour {
         GUI.matrix = svMat; // restore matrix
 
     }
-}
+   
+    }
+
