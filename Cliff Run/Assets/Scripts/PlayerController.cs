@@ -12,8 +12,10 @@ public class PlayerController : MonoBehaviour {
     private Vector3 scale;
     public float originalWidth = 640.0f;  // define here the original resolution
     public float originalHeight = 360.0f; // you used to create the GUI contents 
+    public bool Lost = false;
     public float x, y, width, height;
-
+    public GUIStyle Retry;
+    public GUIStyle Score;
 
 
     float gravity = 15.0f;
@@ -36,9 +38,8 @@ public class PlayerController : MonoBehaviour {
         cc.SimpleMove(movement);
 
         // jump
-       // if (Input.touchCount > 0)
-            if(Input.GetMouseButton(0))
-            if (cc.isGrounded)
+        if (Input.touchCount > 0)
+           if (cc.isGrounded)
             {
                 movementj.y = jumpSpeed;
 
@@ -49,6 +50,8 @@ public class PlayerController : MonoBehaviour {
         //score
         if(this.gameObject.transform.position.y < -1)
         {
+            Lost = true;
+            
             if(PlayerPrefs.GetFloat("HighScore") <= score)
             {
                 Highscore = score;
@@ -67,8 +70,21 @@ public class PlayerController : MonoBehaviour {
         GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
 
         //draw here
-
-        GUI.Label(new Rect(250.05f, 75.6f, 317.4f, 21.44f), "Score "+ score.ToString() + "  " + "HighScore " + Highscore.ToString());
+        if(Lost == true)
+        {
+            GUI.Label(new Rect(267.02f, 49.88f, 0, 0), "Score: " + score.ToString(), Score);
+            GUI.Label(new Rect(267.02f, 66.3f, 0, 0), "HighScore: " + Highscore.ToString(), Score);
+            if (GUI.Button(new Rect(230.5f, 310.99f, 62.8f, 23.3f), "", Retry))
+            {
+                Lost = false;
+                
+                SceneManager.LoadScene("Game");
+            }
+        }else
+        {
+            GUI.Label(new Rect(41.34f, 0, 0, 0), "Score: " + score.ToString(), Score);
+        }
+       
 
         //
         GUI.matrix = svMat;
