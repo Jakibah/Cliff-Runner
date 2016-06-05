@@ -11,6 +11,7 @@ public class DrawMenu : MonoBehaviour {
     public float ad;
     public bool showed = false;
     public GUIStyle Play;
+    public bool initing = false;
     
     void Start () {
 	
@@ -36,6 +37,7 @@ public class DrawMenu : MonoBehaviour {
         var svMat = GUI.matrix; // save current matrix
         GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
         //draw here
+
         if (Advertisement.isInitialized) {
             if (GUI.Button(new Rect(339.1f, 396.3f, 148.1f, 48f), "", Play))
             {
@@ -50,6 +52,20 @@ public class DrawMenu : MonoBehaviour {
                     SceneManager.LoadScene("Game");
                 }
 
+            }else
+            {
+                StartCoroutine(Waitforinit());
+                if(initing == true)
+                {
+                    GUI.Label(new Rect(339.1f, 396.3f, 148.1f, 48f), "Initializing....");
+                    if (!(Advertisement.isInitialized))
+                    {
+                        if (GUI.Button(new Rect(339.1f, 396.3f, 148.1f, 48f), "", Play))
+                        {
+                            SceneManager.LoadScene("Game");
+                        }
+                    }
+                }
             }
            // GUI.Button(new Rect(339.1f, 452.52f, 148.1f, 48f), "?");
         }
@@ -57,6 +73,11 @@ public class DrawMenu : MonoBehaviour {
         GUI.matrix = svMat; // restore matrix
 
     }
-   
+   IEnumerator Waitforinit()
+    {
+        yield return new WaitForSeconds(7);
+        initing = true;
+       
+    }
     }
 
