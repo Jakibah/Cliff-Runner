@@ -32,12 +32,13 @@ public class PlayerController : MonoBehaviour {
         Highscore = PlayerPrefs.GetFloat("HighScore");
         cc = GetComponent<CharacterController>();
 
-        forwardspeed = Time.time * speed;
+        forwardspeed =  6 + score / 2;
 
         Vector3 movement = new Vector3(forwardspeed, 0, 0);
         cc.SimpleMove(movement);
 
         // jump
+       // if(Input.GetMouseButton(0))
         if (Input.touchCount > 0)
            if (cc.isGrounded)
             {
