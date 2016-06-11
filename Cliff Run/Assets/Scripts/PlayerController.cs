@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour {
     public GUIStyle Score;
 
 
-    float gravity = 18.0f;
+    float gravity = 14.0f;
    
     float jumpSpeed = 10.0f;
     private Vector3 movementj = Vector3.zero;
@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour {
         float SpaceTime = Time.time - TouchTime;
         Touch touch = Input.touches[0];
 
-        if (touch.phase == TouchPhase.Began)
+        /*if (touch.phase == TouchPhase.Began)
             TouchTime = Time.time;
 
         if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
@@ -64,14 +64,14 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-
+    */
 
 
         if (Input.touchCount > 0)
-            if (cc.isGrounded)
+       if (cc.isGrounded)
             {
                 movementj.y = jumpSpeed;
-                gravity = gravity - Input.GetTouch(0).deltaTime;
+                gravity = gravity - SpaceTime; //Input.GetTouch(0).deltaTime;
 
                 movementj.y -= gravity * Time.deltaTime;
 
