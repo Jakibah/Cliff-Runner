@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour {
     public GUIStyle Score;
 
 
-    float gravity = 15.0f;
+    float gravity = 18.0f;
    
     float jumpSpeed = 10.0f;
     private Vector3 movementj = Vector3.zero;
@@ -26,43 +26,71 @@ public class PlayerController : MonoBehaviour {
     void Start () {
 	
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
         Highscore = PlayerPrefs.GetFloat("HighScore");
         cc = GetComponent<CharacterController>();
 
-        forwardspeed =  6 + score / 2;
+        forwardspeed = 6 + score / 2;
 
         Vector3 movement = new Vector3(forwardspeed, 0, 0);
         cc.SimpleMove(movement);
 
         // jump
-       //if(Input.GetMouseButton(0))
+        float TouchTime = 0;
+        float SpaceTime = Time.time - TouchTime;
+        Touch touch = Input.touches[0];
+
+        if (touch.phase == TouchPhase.Began)
+            TouchTime = Time.time;
+
+        if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+        {
+            SpaceTime = Time.time - TouchTime;
+            if (Time.time - TouchTime <= 0.5)
+            {
+                gravity = 18f;
+            }
+            else if (gravity - SpaceTime < 11)
+            {
+                gravity = 11;
+
+            }
+            else { 
+                SpaceTime = Time.time - TouchTime;
+                gravity = gravity - SpaceTime;
+
+            }
+        }
+
+
+
+
         if (Input.touchCount > 0)
-           if (cc.isGrounded)
+            if (cc.isGrounded)
             {
                 movementj.y = jumpSpeed;
                 gravity = gravity - Input.GetTouch(0).deltaTime;
-                if (gravity <= 10f)
-                    gravity = 10;
-            }
-        movementj.y -= gravity * Time.deltaTime;
 
-        cc.Move(movementj * Time.deltaTime);
-        //score
-        if(this.gameObject.transform.position.y < -1)
-        {
-            Lost = true;
-            
-            if(PlayerPrefs.GetFloat("HighScore") <= score)
-            {
-                Highscore = score;
-                PlayerPrefs.SetFloat("HighScore", Highscore);
+                movementj.y -= gravity * Time.deltaTime;
 
+                cc.Move(movementj * Time.deltaTime);
             }
-            
-        }
+                //score
+                if (this.gameObject.transform.position.y < -1)
+                {
+                    Lost = true;
+
+                    if (PlayerPrefs.GetFloat("HighScore") <= score)
+                    {
+                        Highscore = score;
+                        PlayerPrefs.SetFloat("HighScore", Highscore);
+
+                    
+
+                }
+            }
     }
     void OnGUI()
     {
