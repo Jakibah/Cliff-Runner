@@ -38,12 +38,14 @@ public class PlayerController : MonoBehaviour {
         cc.SimpleMove(movement);
 
         // jump
-       // if(Input.GetMouseButton(0))
+       //if(Input.GetMouseButton(0))
         if (Input.touchCount > 0)
            if (cc.isGrounded)
             {
                 movementj.y = jumpSpeed;
-
+                gravity = gravity - Input.GetTouch(0).deltaTime;
+                if (gravity <= 10f)
+                    gravity = 10;
             }
         movementj.y -= gravity * Time.deltaTime;
 
