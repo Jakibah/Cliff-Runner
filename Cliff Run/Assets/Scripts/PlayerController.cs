@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour {
        if (cc.isGrounded)
             {
                 movementj.y = jumpSpeed;
-                gravity = gravity - SpaceTime; //Input.GetTouch(0).deltaTime;
+                //Input.GetTouch(0).deltaTime;
 
                 movementj.y -= gravity * Time.deltaTime;
 

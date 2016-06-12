@@ -12,72 +12,45 @@ public class DrawMenu : MonoBehaviour {
     public bool showed = false;
     public GUIStyle Play;
     public bool initing = false;
-    
+    public bool javabool;
+    public AndroidJavaClass AJC;
     void Start () {
-	
-	}
+        AJC = new AndroidJavaClass("com.jakibah.unitywifichecker.AndroidPlugin");
+    }
 	
 	// Update is called once per frame
 	void Update () {
-	
+        javabool = AJC.Call<bool>("getWifi", javabool);
 	}
     void OnGUI()
     {
 
-        if (!(Advertisement.isShowing))
-        {
-            if (showed == true)
-            {
-                SceneManager.LoadScene("Game");
-            }
-        }
+      
         scale.x = Screen.width / originalWidth; // calculate hor scale
         scale.y = Screen.height / originalHeight; // calculate vert scale
         scale.z = 1;
         var svMat = GUI.matrix; // save current matrix
         GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
         //draw here
+        //if (GUI.Button(new Rect(339.1f, 396.3f, 148.1f, 48f), "", Play))
 
-        if (Advertisement.isInitialized) {
+
+        if (javabool == false)
+        {
             if (GUI.Button(new Rect(339.1f, 396.3f, 148.1f, 48f), "", Play))
-            {
-                ad = Random.Range(0, 2);
-                if (ad == 0)
-                {
-                    GetComponent<StartAds>().Show = true;
-                    showed = true;
-
-                } else
-                {
-                    SceneManager.LoadScene("Game");
-                }
-
-            }else
-            {
-                StartCoroutine(Waitforinit());
-                if(initing == true)
-                {
-                    GUI.Label(new Rect(339.1f, 396.3f, 148.1f, 48f), "Initializing....");
-                    if (!(Advertisement.isInitialized))
-                    {
-                        if (GUI.Button(new Rect(339.1f, 396.3f, 148.1f, 48f), "", Play))
-                        {
-                            SceneManager.LoadScene("Game");
-                        }
-                    }
-                }
-            }
-           // GUI.Button(new Rect(339.1f, 452.52f, 148.1f, 48f), "?");
+                SceneManager.LoadScene("Game");
         }
+
+
+
+        if (javabool == true)
+        {
+
+            GetComponent<StartAds>().Show = true;
+                }
         //
         GUI.matrix = svMat; // restore matrix
 
     }
-   IEnumerator Waitforinit()
-    {
-        yield return new WaitForSeconds(7);
-        initing = true;
-       
+  
     }
-    }
-
