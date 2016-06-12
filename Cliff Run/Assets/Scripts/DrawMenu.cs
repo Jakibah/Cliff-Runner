@@ -2,8 +2,10 @@
 using System.Collections;
 using UnityEngine.Advertisements;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class DrawMenu : MonoBehaviour {
+    public Text debug;
     private Vector3 scale;
     public float originalWidth = 640.0f;  // define here the original resolution
     public float originalHeight = 360.0f; // you used to create the GUI contents 
@@ -14,13 +16,15 @@ public class DrawMenu : MonoBehaviour {
     public bool initing = false;
     public bool javabool;
     public AndroidJavaClass AJC;
+    
     void Start () {
         AJC = new AndroidJavaClass("com.jakibah.unitywifichecker.AndroidPlugin");
     }
 	
 	// Update is called once per frame
 	void Update () {
-        javabool = AJC.Call<bool>("getWifi", javabool);
+        javabool = AJC.Call<bool>("getWifi");
+        debug.text = javabool.ToString();
 	}
     void OnGUI()
     {
