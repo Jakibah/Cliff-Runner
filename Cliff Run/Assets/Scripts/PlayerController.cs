@@ -18,9 +18,9 @@ public class PlayerController : MonoBehaviour {
     public GUIStyle Score;
 
 
-    float gravity = 14.0f;
+   public float gravity = 11.0f;
    
-    float jumpSpeed = 10.0f;
+   public float jumpSpeed = 10.0f;
     private Vector3 movementj = Vector3.zero;
     // Use this for initialization
     void Start () {
@@ -34,51 +34,28 @@ public class PlayerController : MonoBehaviour {
 
         forwardspeed = 6 + score / 2;
 
-        Vector3 movement = new Vector3(forwardspeed, 0, 0);
-        cc.SimpleMove(movement);
 
-        // jump
-        float TouchTime = 0;
-        float SpaceTime = Time.time - TouchTime;
-        Touch touch = Input.touches[0];
+       // movementj.x = forwardspeed;
 
-        /*if (touch.phase == TouchPhase.Began)
-            TouchTime = Time.time;
 
-        if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+        //if (Input.touchCount > 0)
+        if (Input.GetMouseButton(0))
         {
-            SpaceTime = Time.time - TouchTime;
-            if (Time.time - TouchTime <= 0.5)
-            {
-                gravity = 18f;
-            }
-            else if (gravity - SpaceTime < 11)
-            {
-                gravity = 11;
-
-            }
-            else { 
-                SpaceTime = Time.time - TouchTime;
-                gravity = gravity - SpaceTime;
-
-            }
-        }
-
-    */
-
-
-        if (Input.touchCount > 0)
-       if (cc.isGrounded)
+            if (cc.isGrounded)
             {
                 movementj.y = jumpSpeed;
-                //Input.GetTouch(0).deltaTime;
-
-                movementj.y -= gravity * Time.deltaTime;
-
-                cc.Move(movementj * Time.deltaTime);
             }
-                //score
-                if (this.gameObject.transform.position.y < -1)
+           
+
+               
+
+
+            
+        }
+        movementj.y -= gravity * Time.deltaTime;
+        cc.Move(movementj * Time.deltaTime);
+        //score
+        if (this.gameObject.transform.position.y < -1)
                 {
                     Lost = true;
 
