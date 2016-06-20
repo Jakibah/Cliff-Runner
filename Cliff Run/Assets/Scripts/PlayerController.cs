@@ -35,11 +35,10 @@ public class PlayerController : MonoBehaviour {
         forwardspeed = 6 + score / 2;
 
 
-       // movementj.x = forwardspeed;
+       movementj.x = forwardspeed;
 
 
-        //if (Input.touchCount > 0)
-        if (Input.GetMouseButton(0))
+        if (Input.touchCount > 0)
         {
             if (cc.isGrounded)
             {
