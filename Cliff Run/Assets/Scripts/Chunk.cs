@@ -36,7 +36,7 @@ public class Chunk : MonoBehaviour
             }
             if (c.gameObject.tag == "4")
             {
-                if(vier >= 1)
+                if(een + twee + drie > 0)
                 Destroy(c.gameObject);
 
             }

@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour {
     public GUIStyle Score;
 
 
-   public float gravity = 11.0f;
+   public float gravity = 32.0f;
    
    public float jumpSpeed = 10.0f;
     private Vector3 movementj = Vector3.zero;
@@ -32,13 +32,14 @@ public class PlayerController : MonoBehaviour {
         Highscore = PlayerPrefs.GetFloat("HighScore");
         cc = GetComponent<CharacterController>();
 
-        forwardspeed = 6 + score / 2;
+        forwardspeed = speed + score / 2;
+        
+
+      movementj.x = forwardspeed;
 
 
-       movementj.x = forwardspeed;
-
-
-        if (Input.touchCount > 0)
+        //if (Input.touchCount > 0)
+       if(Input.GetMouseButton(0))
         {
             if (cc.isGrounded)
             {
