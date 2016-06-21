@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour {
         }
         movementj.y -= gravity * Time.deltaTime;
         cc.Move(movementj * Time.deltaTime);
+        Camera.main.GetComponent<Transform>().position = new Vector3(gameObject.GetComponent<Transform>().position.x , 1.64f, -10.75f);
         //score
         if (this.gameObject.transform.position.y < -1)
                 {
