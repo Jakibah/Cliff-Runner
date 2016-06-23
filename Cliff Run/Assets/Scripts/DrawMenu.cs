@@ -17,17 +17,15 @@ public class DrawMenu : MonoBehaviour{
     public GUIStyle Play;
     public bool initing = false;
     public bool javabool;
-    public AndroidJavaClass AJC;
-    public AndroidJavaObject AJO;
+    
     
     void Start () {
-        AJC = new AndroidJavaClass("com.jakibah.unitywifichecker.AndroidPlugin");
-        AJO = AJC.GetStatic<AndroidJavaObject>("instance");
+        
     }
 	
 	// Update is called once per frame
 	void Update () {
-        javabool = AJO.Call<bool>("getWifi");
+        javabool = WifiCheck.getWifi();
         debug.text = javabool.ToString();
 	}
     void OnGUI()
