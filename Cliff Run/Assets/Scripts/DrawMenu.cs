@@ -26,7 +26,7 @@ public class DrawMenu : MonoBehaviour{
 	// Update is called once per frame
 	void Update () {
         javabool = WifiCheck.getWifi();
-        debug.text = javabool.ToString();
+        debug.text = WifiCheck.Test();//javabool.ToString();
 	}
     void OnGUI()
     {

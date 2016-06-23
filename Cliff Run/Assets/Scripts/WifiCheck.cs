@@ -32,4 +32,8 @@ public class WifiCheck : MonoBehaviour {
     {
         return AndroidPlugin.Call<bool>("getWifi");
     }
+    public static string Test()
+    {
+        return AndroidPlugin.Call<string>("Test");
+    }
 }
