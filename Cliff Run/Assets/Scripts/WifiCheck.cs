@@ -30,10 +30,7 @@ public class WifiCheck : MonoBehaviour {
 	// Update is called once per frame
 	public static bool getWifi()
     {
-        return AndroidPlugin.Call<bool>("getWifi");
+        return AndroidPlugin.Call<bool>("getInternet");
     }
-    public static string Test()
-    {
-        return AndroidPlugin.Call<string>("Test");
-    }
+   
 }
